@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Christmas Wishlist ✨</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap');
+:root{--wine:#751e36;--cream:#fff8ef;--gold:#bc8b49}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--wine);font-family:'DM Sans',sans-serif;text-align:center;min-height:100vh;background-image:radial-gradient(#e9d9d0 1px,transparent 1px);background-size:24px 24px}main{max-width:660px;margin:6vh auto;padding:35px 24px;background:#fffdf9;border:1px solid #ecd6cb;border-radius:24px;box-shadow:0 15px 60px #751e3617}h1,h2{font-family:'Playfair Display',serif}h1{font-size:clamp(2rem,6vw,3.4rem);margin:12px 0}p{line-height:1.6}.doll{width:170px;height:170px;object-fit:contain;display:block;margin:auto}.placeholder{display:grid;place-items:center;background:#f5e3e6;border-radius:50%;font-size:80px}.tag{letter-spacing:3px;font-size:12px;text-transform:uppercase;color:var(--gold)}button,.giftlink{background:var(--wine);color:white;border:0;padding:14px 22px;border-radius:40px;margin:8px;cursor:pointer;font:inherit;display:inline-block;text-decoration:none}button:hover,.giftlink:hover{background:#9a3552}.secondary{background:#f5e4e8;color:var(--wine)}.screen{display:none}.screen.active{display:block}.gift{border:1px solid #edd8cf;padding:20px;border-radius:18px;margin:18px auto;max-width:390px}.gift img{width:100%;max-height:210px;object-fit:contain;border-radius:12px}.snow{position:fixed;top:-20px;color:#d9bdc5;pointer-events:none;animation:fall linear forwards}@keyframes fall{to{transform:translateY(110vh)}}footer{font-size:12px;color:#9b7882;padding:12px}
+.popup{position:fixed;inset:0;background:#38101d91;display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;animation:fade .3s ease}.popup.hidden{display:none}.popup-card{position:relative;background:#fff9f2;border:2px solid #dfbca7;border-radius:28px;padding:30px 25px;max-width:370px;width:100%;box-shadow:0 20px 70px #25040d66;animation:pop .5s cubic-bezier(.2,1.5,.4,1)}.popup-doll{font-size:85px;margin-bottom:10px}.popup-doll img{height:165px;max-width:100%;object-fit:contain}.bubble{background:white;border:2px solid #e9cbd2;border-radius:22px;padding:20px;line-height:1.6;margin:16px 0}.close{position:absolute;right:12px;top:8px;background:transparent;color:#751e36;font-size:26px;padding:4px 12px}@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}@keyframes fade{from{opacity:0}to{opacity:1}}</style></head><body><main>
+<div class="tag">✦ The Christmas Edit ✦</div>
+<!-- Replace doll.png with your 3D doll image -->
+<img class="doll" src="doll.png" alt="My Christmas doll" onerror="this.style.display='none';document.getElementById('dollFallback').style.display='grid'">
+<div class="doll placeholder" id="dollFallback" style="display:none">🎀</div>
+<section class="screen active" id="welcome"><h1>You're on my nice list!</h1><p>Hi lovely! Welcome to my Christmas wishlist. 🎄<br>Let's find a present that feels just right.</p><button onclick="show('relation')">Let's go ✨</button></section>
+<section class="screen" id="relation"><h2>How do we know each other?</h2><p>Pick the one that fits us best.</p><button onclick="chooseRelation('family')">Family ❤️</button><button onclick="chooseRelation('close')">Close friend 💌</button><button onclick="chooseRelation('friend')">Friend 🌟</button></section>
+<section class="screen" id="budget"><h2>What's your budget?</h2><p>No pressure at all — it's the thought that counts!</p><button onclick="match(15)">Under £15</button><button onclick="match(30)">£15–£30</button><button onclick="match(60)">£30–£60</button><button onclick="match(999)">£60+</button><br><button class="secondary" onclick="show('relation')">← Back</button></section>
+<section class="screen" id="result"><h2>I found your perfect match! 🎁</h2><p id="message"></p><div id="gift"></div><button class="secondary" onclick="show('relation')">Try another match ↻</button></section>
+</main>
+<div id="dollPopup" class="popup" role="dialog" aria-label="Christmas doll welcome">
+  <div class="popup-card">
+    <button class="close" onclick="closePopup()" aria-label="Close">×</button>
+    <div class="popup-doll"><img src="doll.png" alt="Your 3D Christmas doll" onerror="this.replaceWith(document.createTextNode('🎀'))"></div>
+    <div class="bubble" id="dollSpeech">Hi lovely! Welcome to my Christmas wishlist! Let's find the perfect present together. ✨</div>
+    <button onclick="closePopup()">Let's go! 🎁</button>
+  </div>
+</div>
+<footer>Made with love, ribbons & a little Christmas magic ✨</footer>
+<script>
+let relation='friend';
+/* EDIT YOUR GIFTS HERE. Each gift has a minimum budget and allowed relationships.
+   Replace example URLs with real shop links. */
+const gifts=[
+{name:'Cute stationery set',price:12,min:0,max:15,relations:['friend','close','family'],image:'',url:''},
+{name:'Cosy self-care bundle',price:25,min:15,max:30,relations:['friend','close','family'],image:'',url:''},
+{name:'A lovely perfume',price:45,min:30,max:60,relations:['close','family'],image:'',url:''},
+{name:'A special surprise from my dream list',price:80,min:60,max:999,relations:['family','close'],image:'',url:''},
+{name:'A little Christmas treat',price:10,min:0,max:999,relations:['friend','close','family'],image:'',url:''}
+];
+function closePopup(){document.getElementById('dollPopup').classList.add('hidden');if(document.getElementById('welcome').classList.contains('active'))show('relation')}
+function dollSays(message){document.getElementById('dollSpeech').textContent=message;document.getElementById('dollPopup').classList.remove('hidden')}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function chooseRelation(value){relation=value;show('budget')}
+function match(budget){let low=budget===15?0:budget===30?15:budget===60?30:60;let choices=gifts.filter(g=>g.price>=low&&g.price<=(budget===999?Infinity:budget)&&g.relations.includes(relation));if(!choices.length)choices=gifts.filter(g=>g.price<=(budget===999?Infinity:budget)&&g.relations.includes(relation));let g=choices.length?choices[Math.floor(Math.random()*choices.length)]:null;document.getElementById('message').textContent=g?'I would absolutely love this one!':'No gifts in this category yet — try another budget.';document.getElementById('gift').innerHTML=g?`<div class="gift">${g.image?`<img src="${g.image}" alt="">`:'🎁'}<h2>${g.name}</h2><p>About £${g.price}</p>${g.url?`<a class="giftlink" href="${g.url}" target="_blank" rel="noopener">See the gift ↗</a>`:''}</div>`:'';show('result');setTimeout(()=>dollSays(g?'Surprise! I think you’ll love this gift! 🎁✨':'Let’s try another budget! 💌'),300)}
+setInterval(()=>{const s=document.createElement('span');s.className='snow';s.textContent='✳';s.style.left=Math.random()*100+'vw';s.style.animationDuration=5+Math.random()*5+'s';document.body.append(s);setTimeout(()=>s.remove(),10000)},650)
+</script></body></html>
